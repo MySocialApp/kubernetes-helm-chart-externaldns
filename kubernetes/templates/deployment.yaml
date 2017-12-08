@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "kubernetes.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ template "kubernetes.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ template "kubernetes.name" . }}
+    spec:
+      nodeSelector:
+        type: worker
+      containers:
+      - name: {{ template "kubernetes.name" . }}
+        image: registry.opensource.zalan.do/teapot/external-dns:{{ .Values.externaldnsImageVersion }}
+        args:
+        - --source=ingress
+        - --provider=cloudflare
+        env:
+        - name: CF_API_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "kubernetes.name" . }}
+              key: cloudflare.api.email
+        - name: CF_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "kubernetes.name" . }}
+              key: cloudflare.api.key
