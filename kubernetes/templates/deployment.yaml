@@ -17,7 +17,7 @@ spec:
         app: {{ template "kubernetes.name" . }}
     spec:
       nodeSelector:
-        type: worker
+        type: {{ .Values.externaldnsNodeSelector }}
       containers:
       - name: {{ template "kubernetes.name" . }}
         image: registry.opensource.zalan.do/teapot/external-dns:{{ .Values.externaldnsImageVersion }}
