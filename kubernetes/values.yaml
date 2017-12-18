@@ -1,4 +1,5 @@
 externaldnsImageVersion: v0.4.8
 externaldnsCloudflareApiEmail: email@fqdn.com
 externaldnsCloudflareApiKey: xxxyyy
-externaldnsNodeSelector: worker
+externaldnsNodeSelector:
+  node-role.kubernetes.io/node: "true"
