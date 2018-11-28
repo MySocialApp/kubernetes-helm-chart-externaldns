@@ -6,3 +6,11 @@ externaldnsCloudflareProxyied: false
 
 externaldnsNodeSelector:
   node-role.kubernetes.io/node: "true"
+
+externaldnsResources:
+  limits:
+    memory: 64M
+    cpu: 200m
+  requests:
+    memory: 32M
+    cpu: 200m

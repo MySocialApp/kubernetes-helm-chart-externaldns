@@ -38,3 +38,5 @@ spec:
             secretKeyRef:
               name: {{ template "kubernetes.name" . }}
               key: cloudflare.api.key
+        resources:
+{{ toYaml .Values.externaldnsResources | indent 12 }}
